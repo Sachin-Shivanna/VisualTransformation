@@ -28,6 +28,5 @@ docker-compose up
 
 ## Contributors
 
-- Harshith Deshalli Ravi
 - Sachin Shivanna
 
