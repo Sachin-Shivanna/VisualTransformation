@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  tf_gpu_jupyter:
+    image: tensorflow/tensorflow:2.10.0-gpu-jupyter
+    container_name: tf_gpu_jupyter_container
+    ports:
+      - "8888:8888"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - .:/workspace
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libfontconfig1 &&
+        pip install -r /workspace/requirements.txt &&
+        jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root --no-browser
+      "
